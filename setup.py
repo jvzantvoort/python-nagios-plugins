@@ -1,22 +1,41 @@
-"""
-    Setup file for nagios-plugins.
-    Use setup.cfg to configure your project.
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-    This file was generated with PyScaffold 4.6.
-    PyScaffold helps you to put up the scaffold of your new Python project.
-    Learn more under: https://pyscaffold.org/
-"""
+from setuptools import setup, find_packages
+import io
+import os
+import re
 
-from setuptools import setup
+setup_path = os.path.abspath(__file__)
+setup_path_dir = os.path.dirname(setup_path)
 
-if __name__ == "__main__":
-    try:
-        setup(use_scm_version={"version_scheme": "no-guess-dev"})
-    except:  # noqa
-        print(
-            "\n\nAn error occurred while building the project, "
-            "please ensure you have the most updated version of setuptools, "
-            "setuptools_scm and wheel with:\n"
-            "   pip install -U setuptools setuptools_scm wheel\n\n"
-        )
-        raise
+exec(open(os.path.join(setup_path_dir, 'nagios-plugins', 'version.py')).read())
+
+long_description = open(os.path.join(setup_path_dir, 'README.md')).read()
+
+setup(
+    name='nagios-plugins',
+    version=__version__,
+    description='Nagios tests',
+    keywords='nagios,nagios-plugins',
+    long_description=long_description,
+    author='John van Zantvoort',
+    author_email='john@vanzantvoort.org',
+    url='https://github.com/jvzantvoort/python-nagios-plugins',
+    packages=find_packages(exclude=['docs', 'docs-src', 'tests']),
+    # package_data={'nagios-plugins': ['main/*.sh']},
+    license='MIT',
+    test_suite="tests",
+    entry_points='''
+      [console_scripts]
+      glt=nagios-plugins.cli:cli
+    ''',
+    classifiers=[
+          'Development Status :: 5 - Production/Stable',
+          'Intended Audience :: Developers',
+          'Topic :: Office/Business',
+          'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 2.7',
+    ]
+)
